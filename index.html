@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الخامسة — أدوات Word الذكية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:#f8f4ed;--cream-dark:#ede8de;--ink:#1c1a17;--ink-mid:#4a4540;
+  --ink-soft:#7a7268;--rule:#cfc8ba;--gold:#9c7c2e;--gold-light:#c9a84c;
+  --gold-bg:rgba(156,124,46,0.08);--red:#8b2020;--red-bg:#fdf0f0;
+  --green:#1e5c3a;--green-bg:#edf5f0;--blue:#1a3a6b;--blue-bg:#eef2f9;
+  --purple:#5b2d8e;--purple-bg:#f3eefb;--teal:#0e6b6b;--teal-bg:#e8f5f5;
+  --code-bg:#1c1a17;--code-txt:#e8e2d8;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Cairo',sans-serif;font-size:16px;line-height:1.85;}
+.page{max-width:960px;margin:0 auto;padding:0 24px 100px;}
+
+.cover{background:var(--ink);color:var(--cream);padding:64px 48px 48px;margin:0 -24px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'🔍';position:absolute;left:-20px;top:-10px;font-size:200px;opacity:0.05;line-height:1;}
+.cover .meta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;}
+.cover h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,50px);font-weight:900;margin:0 0 12px;line-height:1.2;color:#fff;}
+.cover .sub{color:rgba(248,244,237,0.65);font-size:17px;margin:0 0 36px;}
+.cover-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.pill{border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:20px;letter-spacing:1px;}
+
+.progress-strip{display:flex;gap:0;margin-bottom:56px;border:1px solid var(--rule);border-radius:8px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:11px;}
+.ps-item{flex:1;padding:10px 12px;text-align:center;color:var(--ink-soft);border-left:1px solid var(--rule);background:#fff;}
+.ps-item:last-child{border-left:none;}
+.ps-item.done{background:var(--green-bg);color:var(--green);}
+.ps-item.active{background:var(--ink);color:var(--gold-light);font-weight:700;}
+.ps-item .ps-num{display:block;font-size:16px;font-weight:700;margin-bottom:2px;}
+
+section{margin-bottom:64px;}
+.sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;padding-bottom:12px;border-bottom:2.5px solid var(--ink);}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);border:2px solid var(--gold);border-radius:4px;padding:4px 8px;white-space:nowrap;margin-top:4px;}
+.sec-head h2{margin:0;font-size:clamp(20px,3vw,28px);font-weight:900;line-height:1.25;}
+.sec-head .sec-why{font-size:13px;color:var(--ink-soft);margin-top:4px;font-weight:400;}
+p{margin:0 0 14px;}
+h3{margin:20px 0 12px;font-size:18px;}
+
+.def-box{background:var(--blue-bg);border-right:4px solid var(--blue);border-radius:0 8px 8px 0;padding:16px 20px;margin:14px 0;font-size:15px;}
+.def-box .def-term{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--blue);letter-spacing:1px;display:block;margin-bottom:4px;}
+.def-box-teal{background:var(--teal-bg);border-right:4px solid var(--teal);border-radius:0 8px 8px 0;padding:16px 20px;margin:14px 0;font-size:15px;}
+.def-box-teal .def-term{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--teal);letter-spacing:1px;display:block;margin-bottom:4px;}
+.def-box-purple{background:var(--purple-bg);border-right:4px solid var(--purple);border-radius:0 8px 8px 0;padding:16px 20px;margin:14px 0;font-size:15px;}
+.def-box-purple .def-term{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--purple);letter-spacing:1px;display:block;margin-bottom:4px;}
+.callout{background:var(--gold-bg);border:1.5px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 0;font-size:15px;}
+.callout .c-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;display:block;margin-bottom:6px;}
+.warn{background:var(--red-bg);border-right:4px solid var(--red);border-radius:0 8px 8px 0;padding:14px 18px;margin:18px 0;font-size:15px;}
+.warn .w-tag{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--red);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px;}
+.tip{background:var(--green-bg);border-right:4px solid var(--green);border-radius:0 8px 8px 0;padding:14px 18px;margin:18px 0;font-size:15px;}
+.tip .t-tag{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+.path{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;background:#fff;border:1px solid var(--rule);border-radius:6px;padding:7px 14px;margin:6px 0 12px;direction:ltr;flex-wrap:wrap;}
+.path .arr{color:var(--gold);font-weight:700;}
+.key{display:inline-block;font-family:'JetBrains Mono',monospace;background:var(--ink);color:var(--cream);font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px;margin:0 2px;direction:ltr;white-space:nowrap;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:18px 0;}
+@media(max-width:680px){.grid-2,.grid-3{grid-template-columns:1fr;}.progress-strip{flex-direction:column;}.ps-item{border-left:none;border-top:1px solid var(--rule);}}
+.card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:18px 20px;}
+.card .c-icon{font-size:24px;margin-bottom:8px;display:block;}
+.card h3{margin:0 0 8px;font-size:16px;font-weight:700;}
+.card p{margin:0;color:var(--ink-mid);font-size:14px;}
+
+.sc-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;}
+.sc-table th{text-align:right;padding:10px 12px;border-bottom:2px solid var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);}
+.sc-table td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top;}
+.sc-table tr:hover td{background:var(--cream-dark);}
+.sc-law{font-size:12px;color:var(--blue);background:var(--blue-bg);border-radius:4px;padding:2px 8px;display:inline-block;margin-top:3px;}
+
+dl.glossary{margin:0;}
+dl.glossary>div{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:14px 6px;border-bottom:1px solid var(--rule);align-items:start;}
+@media(max-width:600px){dl.glossary>div{grid-template-columns:1fr;gap:2px;}}
+dl.glossary dt{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--blue);direction:ltr;text-align:left;}
+dl.glossary dd{margin:0;font-size:15px;}
+
+.example{border:1.5px solid var(--rule);border-radius:10px;overflow:hidden;margin:20px 0;}
+.example .ex-head{background:var(--ink);color:var(--gold-light);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 18px;}
+.example .ex-body{background:#fff;padding:20px 22px;font-size:15px;}
+.example .ex-body h4{margin:0 0 10px;font-size:15px;color:var(--ink-mid);}
+
+.drill{background:var(--ink);color:var(--cream);border-radius:10px;padding:22px 24px;margin:22px 0;}
+.drill .drill-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;display:block;}
+.drill h4{margin:0 0 10px;color:#fff;font-size:16px;}
+.drill ol{margin:0;padding-right:20px;font-size:14.5px;color:rgba(248,244,237,0.85);}
+.drill li{margin-bottom:7px;}
+.drill .drill-time{margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-light);}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:18px 0;}
+@media(max-width:620px){.compare{grid-template-columns:1fr;}}
+.compare>div{padding:20px;}
+.compare .bad{background:var(--red-bg);}
+.compare .good{background:var(--green-bg);border-right:1px solid var(--rule);}
+.compare h4{margin:0 0 10px;font-size:14px;font-weight:700;}
+.compare ul{margin:0;padding-right:18px;font-size:14px;color:var(--ink-mid);}
+.compare li{margin-bottom:7px;}
+
+.checklist{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+.checklist li{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:12px 16px;font-size:15px;}
+.check-box{width:20px;height:20px;border:2px solid var(--green);border-radius:4px;flex-shrink:0;margin-top:3px;}
+
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+@media(max-width:620px){.q-grid{grid-template-columns:1fr;}}
+.q-card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:18px 20px;}
+.q-card h3{margin:0 0 12px;font-size:15px;font-weight:700;}
+.q-card ol{margin:0;padding-right:20px;font-size:14px;color:var(--ink-mid);}
+.q-card li{margin-bottom:8px;}
+
+.recap{border:2px dashed var(--green);border-radius:10px;background:var(--green-bg);padding:20px 24px;margin-bottom:48px;}
+.recap .r-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--green);font-weight:700;text-transform:uppercase;display:block;margin-bottom:8px;}
+
+/* Find & Replace dialog mock */
+.dialog-mock{border:2px solid var(--ink);border-radius:6px;background:#f0ece4;max-width:440px;margin:18px auto;overflow:hidden;box-shadow:6px 6px 0 var(--cream-dark);}
+.dialog-title{background:var(--ink);color:var(--gold-light);font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 14px;letter-spacing:1px;}
+.dialog-body{padding:16px 18px;}
+.dialog-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.dialog-label{font-size:13px;color:var(--ink-mid);width:80px;flex-shrink:0;font-weight:600;}
+.dialog-input{flex:1;border:1px solid var(--rule);border-radius:4px;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:13px;background:#fff;}
+.dialog-input.filled{background:var(--blue-bg);border-color:var(--blue);color:var(--blue);}
+.dialog-btns{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}
+.dbtn{font-size:12px;padding:6px 14px;border-radius:4px;border:1px solid var(--rule);background:#fff;font-family:'JetBrains Mono',monospace;cursor:default;}
+.dbtn.primary{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+/* Track changes mock */
+.track-mock{border:1px solid var(--rule);border-radius:10px;background:#fff;padding:20px 22px;margin:18px 0;font-size:15px;line-height:2;}
+.ins{color:var(--green);text-decoration:underline;background:rgba(30,92,58,0.08);padding:1px 3px;border-radius:2px;}
+.del{color:var(--red);text-decoration:line-through;background:rgba(139,32,32,0.08);padding:1px 3px;border-radius:2px;}
+.comment-bubble{display:inline-block;background:var(--gold-bg);border:1px solid var(--gold);border-radius:4px;padding:2px 8px;font-size:12px;color:var(--gold);margin-right:6px;font-family:'JetBrains Mono',monospace;}
+
+/* Spell check mock */
+.spell-mock{font-size:15px;line-height:2.2;}
+.spell-err{border-bottom:2.5px wavy var(--red);color:var(--ink);}
+.gram-err{border-bottom:2.5px wavy var(--blue);color:var(--ink);}
+
+/* Step numbered list */
+.steps-list{list-style:none;padding:0;margin:16px 0;counter-reset:step;}
+.steps-list li{counter-increment:step;display:flex;gap:14px;margin-bottom:12px;align-items:flex-start;}
+.steps-list li::before{content:counter(step);min-width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;flex-shrink:0;margin-top:2px;}
+.steps-list li p{margin:0;font-size:15px;}
+
+footer{text-align:center;padding:24px;border-top:1px solid var(--rule);margin-top:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--ink-soft);text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<header class="cover">
+  <div class="meta">Sunshine T Academy · Word Skills · كليات الحقوق · المحاضرة الخامسة</div>
+  <h1>أدوات Word الذكية<br>للمراجعة والتحرير</h1>
+  <p class="sub">Find & Replace المتقدم — Track Changes — التعليقات — التدقيق الإملائي — Macros — الحماية</p>
+  <div class="cover-pills">
+    <span class="pill">المدة: ساعة ونص</span>
+    <span class="pill">المستوى: متوسط-متقدم</span>
+    <span class="pill">Word 365</span>
+    <span class="pill">المحاضرة ٥ / ١٠</span>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-strip">
+  <div class="ps-item done"><span class="ps-num">١</span>الأساسيات ✓</div>
+  <div class="ps-item done"><span class="ps-num">٢</span>البحوث ✓</div>
+  <div class="ps-item done"><span class="ps-num">٣</span>الجداول ✓</div>
+  <div class="ps-item done"><span class="ps-num">٤</span>الصور ✓</div>
+  <div class="ps-item active"><span class="ps-num">٥</span>الأدوات</div>
+  <div class="ps-item"><span class="ps-num">٦</span>المراسلات</div>
+  <div class="ps-item"><span class="ps-num">٧</span>العقود</div>
+  <div class="ps-item"><span class="ps-num">٨</span>التعاون</div>
+  <div class="ps-item"><span class="ps-num">٩</span>الطباعة</div>
+  <div class="ps-item"><span class="ps-num">١٠</span>المشروع</div>
+</div>
+
+<!-- RECAP -->
+<div class="recap">
+  <span class="r-tag">⚡ مراجعة سريعة من المحاضرة الرابعة — ٥ دقايق</span>
+  <ul style="margin:6px 0 10px;padding-right:20px;font-size:15px;">
+    <li>ما الفرق بين Square و Top and Bottom في Text Wrapping؟</li>
+    <li>ما هو SmartArt ومتى نستخدم Hierarchy مقابل Process في الحقوق؟</li>
+    <li>افتحي ملف الواجب — تحققي: الغلاف مكتمل؟ المخططات فيها Caption؟ قائمة الأشكال موجودة؟</li>
+  </ul>
+  <div class="tip" style="margin:0">
+    <span class="t-tag">الربط بالمحاضرة دي</span>
+    البحث الآن له هيكل وجداول وصور — لكنه يحتاج مراجعة ومشاركة. النهارده هنتعلم أدوات المراجعة الاحترافية التي يستخدمها كل محامٍ ومحقق أكاديمي.
+  </div>
+</div>
+
+<!-- ══ 01. WHY THESE TOOLS ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div>
+      <h2>لماذا أدوات المراجعة ضرورية للحقوقي؟</h2>
+      <div class="sec-why">تأسيس الدافع — ٥ دقايق</div>
+    </div>
+  </div>
+
+  <p>طالب الحقوق بيكتب بحوثاً طويلة، مذكرات، وعقوداً — كلها محتاجة مراجعة دقيقة قبل التسليم. كمان بيشتغل مع زملاء ومشرفين بيعدّلوا على نفس الملف. الأدوات دي هي الفرق بين عمل احترافي وعمل عشوائي.</p>
+
+  <div class="callout">
+    <span class="c-tag">سيناريو حقيقي</span>
+    الدكتور المشرف رجّع البحث بـ ١٥ تعليق وتعديل. بدون Track Changes — مش هتعرفي إيه اللي اتغيّر. بدون Comments — مش هتفهمي السبب. بدون Find & Replace — هتقعدي تدوري على اسم مكرر في ٣٠ صفحة يدوياً.
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <span class="c-icon">🔍</span>
+      <h3>Find & Replace</h3>
+      <p>إيجاد كلمة أو نص في ثوانٍ واستبداله في كل المستند دفعة واحدة.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">🔴</span>
+      <h3>Track Changes</h3>
+      <p>تتبع كل تعديل في المستند بألوان — تقبليه أو ترفضيه لاحقاً.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">💬</span>
+      <h3>Comments</h3>
+      <p>إضافة ملاحظات جانبية على أي جزء من النص دون تغيير المحتوى.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">✅</span>
+      <h3>Spelling & Grammar</h3>
+      <p>تدقيق إملائي ونحوي تلقائي — ضروري قبل تسليم أي وثيقة.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">🔒</span>
+      <h3>Document Protection</h3>
+      <p>حماية المستند بكلمة مرور أو تقييد التعديلات على أجزاء محددة.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">⚡</span>
+      <h3>AutoCorrect & Macros</h3>
+      <p>توفير الوقت بتصحيح تلقائي للأخطاء الشائعة وأتمتة المهام المتكررة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02. FIND & REPLACE ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div>
+      <h2>البحث والاستبدال (Find & Replace)</h2>
+      <div class="sec-why">الأداة رقم ١ في توفير الوقت — ١٥ دقيقة</div>
+    </div>
+  </div>
+
+  <h3>أ. Find (البحث البسيط)</h3>
+  <div class="path">Home <span class="arr">→</span> Find</div>
+  <p>أو الاختصار المباشر: <span class="key">Ctrl + F</span> — يفتح شريط البحث على يمين الشاشة</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Navigation Pane</h3>
+      <p>عند البحث تظهر النتائج في لوحة التنقل. انقري على أي نتيجة للانتقال إليها فوراً.</p>
+    </div>
+    <div class="card">
+      <h3>الإحصاء التلقائي</h3>
+      <p>Word يعرض عدد مرات ظهور الكلمة في المستند — مثال: "وجد ١٢ نتيجة".</p>
+    </div>
+  </div>
+
+  <h3>ب. Find & Replace (البحث والاستبدال)</h3>
+  <div class="path">Home <span class="arr">→</span> Replace</div>
+  <p>أو: <span class="key">Ctrl + H</span> — يفتح مربع الحوار مباشرةً</p>
+
+  <!-- Dialog mock -->
+  <div class="dialog-mock">
+    <div class="dialog-title">Find and Replace — البحث والاستبدال</div>
+    <div class="dialog-body">
+      <div class="dialog-row">
+        <span class="dialog-label">Find what:</span>
+        <div class="dialog-input filled">المتهم</div>
+      </div>
+      <div class="dialog-row">
+        <span class="dialog-label">Replace with:</span>
+        <div class="dialog-input filled">المتهم الأول</div>
+      </div>
+      <div class="dialog-btns">
+        <div class="dbtn">Find Next</div>
+        <div class="dbtn">Replace</div>
+        <div class="dbtn primary">Replace All</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>ج. Find & Replace المتقدم (More Options)</h3>
+  <div class="path">Ctrl + H <span class="arr">→</span> More &gt;&gt;</div>
+
+  <table class="sc-table">
+    <thead><tr><th>الخيار المتقدم</th><th>ما يفعله</th><th>الاستخدام في الحقوق</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Match Case</strong></td>
+        <td>تطابق حالة الأحرف (كبيرة/صغيرة)</td>
+        <td><span class="sc-law">البحث عن "القانون" بدون "القانوني" أو "قانون"</span></td>
+      </tr>
+      <tr>
+        <td><strong>Find Whole Words Only</strong></td>
+        <td>البحث عن الكلمة كاملة فقط</td>
+        <td><span class="sc-law">البحث عن "عقد" بدون "عقدة" أو "عقود"</span></td>
+      </tr>
+      <tr>
+        <td><strong>Use Wildcards</strong></td>
+        <td>استخدام رموز بحث خاصة (مثل * و ?)</td>
+        <td><span class="sc-law">البحث عن "م. ١*" لإيجاد كل المواد القانونية</span></td>
+      </tr>
+      <tr>
+        <td><strong>Find All Word Forms</strong></td>
+        <td>البحث عن كل تصريفات الكلمة</td>
+        <td><span class="sc-law">البحث عن "حكم" يشمل "يحكم" و"الحكم"</span></td>
+      </tr>
+      <tr>
+        <td><strong>Format → Font</strong></td>
+        <td>البحث عن نص بتنسيق محدد</td>
+        <td><span class="sc-law">إيجاد كل النصوص Bold لتوحيد تنسيقها</span></td>
+      </tr>
+      <tr>
+        <td><strong>Special → Paragraph Mark</strong></td>
+        <td>البحث عن رموز خاصة مثل فقرات أو tabs</td>
+        <td><span class="sc-law">حذف الأسطر الفارغة الزيادة في المستند كله</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Example 1 -->
+  <div class="example">
+    <div class="ex-head">📋 مثال ١ — تغيير اسم موكّل في عقد كامل</div>
+    <div class="ex-body">
+      <h4>السيناريو: عقد بيع من ٢٠ صفحة — اكتشفتِ أن اسم المشتري مكتوب غلط في كل العقد</h4>
+      <ol>
+        <li>اضغطي <span class="key">Ctrl + H</span> لفتح Find & Replace</li>
+        <li>في "Find what": اكتبي الاسم الخاطئ مثلاً "محمد أحمد علي محمود"</li>
+        <li>في "Replace with": اكتبي الاسم الصحيح "محمد أحمد علي محمد"</li>
+        <li>اضغطي <strong>Replace All</strong></li>
+        <li>Word سيعرض: "تم استبدال ١٨ حالة" — الاسم تغيّر في كل العقد في ثانية واحدة</li>
+        <li>اضغطي <span class="key">Ctrl + Z</span> لو أردتِ التراجع</li>
+      </ol>
+      <div class="tip" style="margin-top:12px;margin-bottom:0">
+        <span class="t-tag">توفير الوقت</span>
+        بدون Replace All كنتِ ستحتاجين لتغيير الاسم يدوياً ١٨ مرة — مع احتمال نسيان بعضها!
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 2 -->
+  <div class="example">
+    <div class="ex-head">📋 مثال ٢ — حذف الأسطر الفارغة الزيادة من بحث</div>
+    <div class="ex-body">
+      <h4>السيناريو: بحث فيه أسطر فارغة متعددة بين الفقرات — يجعله يبدو غير منظم</h4>
+      <ol>
+        <li>اضغطي <span class="key">Ctrl + H</span></li>
+        <li>اضغطي <strong>More &gt;&gt;</strong> ثم <strong>Special</strong></li>
+        <li>في "Find what": اختاري <strong>Paragraph Mark</strong> مرتين — ستظهر "^p^p"</li>
+        <li>في "Replace with": اختاري <strong>Paragraph Mark</strong> مرة واحدة — "^p"</li>
+        <li>اضغطي <strong>Replace All</strong> — كرّري حتى يقول "تم استبدال ٠ حالة"</li>
+      </ol>
+      <div class="warn" style="margin-top:12px;margin-bottom:0">
+        <span class="w-tag">تنبيه</span>
+        الأسلوب ده بيحذف كل الأسطر الفارغة المزدوجة. لو البحث محتاج مسافة بين الفصول — استخدمي Page Break بدلاً من أسطر فارغة من البداية.
+      </div>
+    </div>
+  </div>
+
+  <!-- Drill 1 -->
+  <div class="drill">
+    <span class="drill-tag">تدريب ١ — Find & Replace في بحث قانوني</span>
+    <h4>على ملف بحث من المحاضرات السابقة:</h4>
+    <ol>
+      <li>استخدمي <span class="key">Ctrl + F</span> لإيجاد كلمة "القانون" — كم مرة تكررت؟</li>
+      <li>استخدمي <span class="key">Ctrl + H</span> لاستبدال "محكمة النقض" بـ "محكمة النقض المصرية" في كل المستند</li>
+      <li>جرّبي More Options → Match Case وابحثي عن "قانون" (بالحرف الصغير) وشاهدي النتيجة</li>
+      <li>استبدلي كل النص Bold بنص Normal عبر: Format → Font → Bold (في Find) ← اتركي Replace فارغة</li>
+      <li>تراجعي عن كل التغييرات بـ <span class="key">Ctrl + Z</span></li>
+    </ol>
+    <div class="drill-time">⏱ الوقت المتوقع: 8 دقايق</div>
+  </div>
+</section>
+
+<!-- ══ 03. TRACK CHANGES ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div>
+      <h2>تتبع التغييرات (Track Changes)</h2>
+      <div class="sec-why">الأداة الأهم للعمل مع المشرف — ٢٠ دقيقة</div>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="def-term">Track Changes</span>
+    أداة تُسجّل كل تعديل يحدث في المستند — إضافة نص، حذف نص، تغيير تنسيق — مع اسم المعدِّل والتاريخ. كل تغيير يظهر بلون مختلف ويمكن قبوله أو رفضه لاحقاً.
+  </div>
+
+  <div class="path">Review <span class="arr">→</span> Track Changes <span class="arr">→</span> Track Changes</div>
+  <p>أو الاختصار: <span class="key">Ctrl + Shift + E</span> (تفعيل/إيقاف)</p>
+
+  <h3>أ. كيف يبدو المستند مع Track Changes مفعّل</h3>
+  <div class="track-mock">
+    <p>تُعدّ المسؤولية المدنية <span class="del">التقصيرية</span> <span class="ins">العقدية</span> من أهم موضوعات القانون المدني<span class="ins"> المصري</span>.</p>
+    <p><span class="ins">وقد نظّم المشرّع المصري أحكامها في المواد من ١٦٣ إلى ١٧٨ من القانون المدني.</span></p>
+    <p style="margin-top:8px"><span class="comment-bubble">تعليق: يرجى إضافة مرجع هنا</span>وقد استقر الفقه على أن هذه المسؤولية تقوم على ثلاثة أركان.</p>
+  </div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin-top:8px;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--green);font-weight:700">نص أخضر مسطّر</span> = إضافة جديدة</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--red);text-decoration:line-through;font-weight:700">نص أحمر مشطوب</span> = نص محذوف</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--gold);font-weight:700">مستطيل ذهبي</span> = تعليق</span>
+  </div>
+
+  <h3 style="margin-top:24px">ب. قبول أو رفض التغييرات</h3>
+  <div class="path">Review <span class="arr">→</span> Accept / Reject</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Accept This Change</h3>
+      <p>قبول التغيير الحالي فقط — التعديل يصبح جزءاً ثابتاً من النص.</p>
+    </div>
+    <div class="card">
+      <h3>Accept All Changes</h3>
+      <p>قبول كل التغييرات دفعة واحدة — يُنظّف المستند من كل العلامات.</p>
+    </div>
+    <div class="card">
+      <h3>Reject This Change</h3>
+      <p>رفض التغيير والعودة للنص الأصلي قبل التعديل.</p>
+    </div>
+    <div class="card">
+      <h3>Reject All Changes</h3>
+      <p>إلغاء كل التغييرات والعودة للنسخة الأصلية كاملة.</p>
+    </div>
+  </div>
+
+  <h3>ج. إعدادات العرض (Show Markup)</h3>
+  <div class="path">Review <span class="arr">→</span> Show Markup</div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>All Markup</h3>
+      <p>عرض كل التغييرات والتعليقات بالألوان. الوضع الافتراضي عند المراجعة.</p>
+    </div>
+    <div class="card">
+      <h3>Simple Markup</h3>
+      <p>يُظهر علامة حمراء في الهامش فقط بدون تفاصيل. لقراءة أوضح.</p>
+    </div>
+    <div class="card">
+      <h3>No Markup</h3>
+      <p>يُخفي كل التغييرات ويعرض الشكل النهائي كما سيبدو بعد القبول.</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <span class="t-tag">سر احترافي</span>
+    قبل إرسال البحث للمشرف — فعّلي Track Changes أولاً ثم اطلبي منه يعدّل. هكذا ترين بالضبط ما غيّره دون أن تضطري لمقارنة نسختين يدوياً.
+  </div>
+
+  <!-- Example 3 -->
+  <div class="example">
+    <div class="ex-head">📋 مثال ٣ — مراجعة بحث مع المشرف</div>
+    <div class="ex-body">
+      <h4>السيناريو: أرسلتِ بحث "عقد الإيجار" للدكتور — رجع بتعديلات كثيرة</h4>
+      <ol>
+        <li>افتحي الملف الذي أرسله الدكتور — التعديلات ستظهر بألوان تلقائياً</li>
+        <li>اذهبي إلى: <span class="path" style="margin:0 4px">Review <span class="arr">→</span> Show Markup <span class="arr">→</span> All Markup</span></li>
+        <li>اقرئي كل تعديل — انتقلي بين التعليقات بـ: <span class="path" style="margin:0 4px">Review <span class="arr">→</span> Next Comment</span></li>
+        <li>لكل تعليق: إما عدّلي النص ثم احذفي التعليق، أو اتركيه مؤقتاً</li>
+        <li>للتعديلات النصية: قرّري قبول أو رفض كل تعديل</li>
+        <li>في النهاية: Accept All Changes → احفظي نسخة جديدة باسم "بحث_الإيجار_نسخة٢"</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Drill 2 -->
+  <div class="drill">
+    <span class="drill-tag">تدريب ٢ — Track Changes بين الطالب والمشرف</span>
+    <h4>شغّلي Track Changes وطبّقي التعديلات التالية:</h4>
+    <ol>
+      <li>فعّلي Track Changes: <span class="key">Ctrl + Shift + E</span></li>
+      <li>اكتبي جملة جديدة في نهاية أي فقرة — ستظهر بلون مختلف</li>
+      <li>احذفي كلمة من وسط نص — ستظهر مشطوبة بدل ما تختفي</li>
+      <li>غيّري تنسيق كلمة (Bold) — ستظهر علامة في الهامش</li>
+      <li>أوقفي Track Changes: <span class="key">Ctrl + Shift + E</span></li>
+      <li>اقبلي تعديلاً واحداً (Accept) وارفضي آخر (Reject) وشاهدي النتيجة</li>
+      <li>اضغطي Accept All Changes وشاهدي المستند نظيفاً</li>
+    </ol>
+    <div class="drill-time">⏱ الوقت المتوقع: 8 دقايق</div>
+  </div>
+</section>
+
+<!-- ══ 04. COMMENTS ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">04</div>
+    <div>
+      <h2>التعليقات (Comments)</h2>
+      <div class="sec-why">للتواصل بدون تغيير النص — ١٠ دقايق</div>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="def-term">Comment (التعليق)</span>
+    ملاحظة نصية مرتبطة بجزء محدد من المستند — تظهر في الهامش. لا تغيّر النص الأصلي. يمكن الرد عليها وحذفها.
+  </div>
+
+  <h3>أ. إضافة تعليق جديد</h3>
+  <div class="path">حدّدي النص المراد التعليق عليه <span class="arr">→</span> Review <span class="arr">→</span> New Comment</div>
+  <p>أو: <span class="key">Ctrl + Alt + M</span></p>
+
+  <h3>ب. التنقل بين التعليقات</h3>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Next / Previous Comment</h3>
+      <p>Review → Next/Previous للتنقل بين التعليقات بالترتيب في المستند الطويل.</p>
+    </div>
+    <div class="card">
+      <h3>Delete Comment</h3>
+      <p>يمين الماوس على التعليق → Delete Comment | أو Review → Delete All Comments.</p>
+    </div>
+  </div>
+
+  <h3>ج. الرد على تعليق (Reply to Comment)</h3>
+  <p>في Word 365، يمكن الرد على تعليق مباشرةً داخله — مثل محادثة. مفيد جداً في المراجعة المشتركة مع الدكتور أو الزملاء.</p>
+
+  <div class="callout">
+    <span class="c-tag">الفرق بين Comment و Track Changes</span>
+    Track Changes = تعديل فعلي في النص يمكن قبوله أو رفضه. Comment = ملاحظة جانبية للشرح أو التساؤل — لا تغيّر النص وتُحذف يدوياً. في الحقوق: المشرف يستخدم التعليقات ليقول "أضيفي مرجعاً هنا" دون تعديل النص نفسه.
+  </div>
+
+  <h3>د. طباعة المستند مع أو بدون التعليقات</h3>
+  <div class="path">File <span class="arr">→</span> Print <span class="arr">→</span> Print All Pages <span class="arr">→</span> Print Markup (لطباعة التعليقات)</div>
+  <p>أو اختاري <strong>Document</strong> بدلاً من <strong>Document Showing Markup</strong> لطباعة بدون تعليقات.</p>
+</section>
+
+<!-- ══ 05. SPELLING & GRAMMAR ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <div>
+      <h2>التدقيق الإملائي والنحوي</h2>
+      <div class="sec-why">الخط الدفاعي الأخير — ١٠ دقايق</div>
+    </div>
+  </div>
+
+  <p>وثيقة قانونية فيها خطأ إملائي = وثيقة غير محترمة. Word بيوفّر أدوات تدقيق قوية لكن لها حدود — يجب فهمها جيداً.</p>
+
+  <h3>أ. التدقيق التلقائي أثناء الكتابة</h3>
+  <div class="spell-mock">
+    <p>تُعدّ <span class="spell-err">المسؤلية</span> المدنية من <span class="gram-err">أهم أحكام</span> القانون المدني <span class="spell-err">المصرى</span>.</p>
+  </div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin:8px 0 16px;">
+    <span><span style="color:var(--red);font-weight:700">خط أحمر متعرج</span> = خطأ إملائي</span>
+    <span><span style="color:var(--blue);font-weight:700">خط أزرق متعرج</span> = خطأ نحوي أو أسلوبي</span>
+  </div>
+
+  <h3>ب. تشغيل التدقيق الكامل للمستند</h3>
+  <div class="path">Review <span class="arr">→</span> Spelling & Grammar</div>
+  <p>أو الاختصار: <span class="key">F7</span></p>
+
+  <table class="sc-table">
+    <thead><tr><th>الخيار</th><th>ما يفعله</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ignore Once</strong></td><td>تجاهل الخطأ الحالي مرة واحدة فقط</td></tr>
+      <tr><td><strong>Ignore All</strong></td><td>تجاهل كل مواضع هذه الكلمة في المستند</td></tr>
+      <tr><td><strong>Add to Dictionary</strong></td><td>إضافة الكلمة للقاموس — لن تُعلَّم كخطأ مستقبلاً</td></tr>
+      <tr><td><strong>Change</strong></td><td>تطبيق التصحيح المقترح على الخطأ الحالي</td></tr>
+      <tr><td><strong>Change All</strong></td><td>تطبيق التصحيح على كل مواضع الكلمة</td></tr>
+      <tr><td><strong>AutoCorrect</strong></td><td>إضافة الكلمة للتصحيح التلقائي مستقبلاً</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <span class="w-tag">حدود التدقيق الإملائي في العربية</span>
+    التدقيق الإملائي العربي في Word ليس مثالياً. كثير من المصطلحات القانونية العربية قد تُعلَّم كأخطاء مثل "الإيجاب" أو "المُعسِر". الحل: أضيفيها للقاموس (Add to Dictionary) من أول مرة.
+  </div>
+
+  <h3>ج. Thesaurus — قاموس المترادفات</h3>
+  <div class="path">Review <span class="arr">→</span> Thesaurus</div>
+  <p>أو: <span class="key">Shift + F7</span> على الكلمة المراد إيجاد مرادفاتها</p>
+  <p>مفيد في الكتابة القانونية لتجنب تكرار نفس المصطلح عشرات المرات في البحث.</p>
+
+  <h3>د. Word Count — عد الكلمات</h3>
+  <div class="path">Review <span class="arr">→</span> Word Count</div>
+  <p>أو انظري لشريط الحالة في أسفل الشاشة — يعرض عدد الكلمات دائماً.</p>
+  <p>ضروري عندما الأستاذ يحدد حداً أقصى لعدد الكلمات في البحث.</p>
+</section>
+
+<!-- ══ 06. DOCUMENT PROTECTION ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">06</div>
+    <div>
+      <h2>حماية المستند (Document Protection)</h2>
+      <div class="sec-why">للعقود والوثائق الرسمية — ١٠ دقايق</div>
+    </div>
+  </div>
+
+  <p>في الحقوق، بعض الوثائق لا يجب أن يعدّل عليها أحد بعد التوقيع أو الاعتماد. Word يوفر عدة مستويات من الحماية.</p>
+
+  <h3>أ. Restrict Editing — تقييد التعديل</h3>
+  <div class="path">Review <span class="arr">→</span> Restrict Editing</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="c-icon">📝</span>
+      <h3>Formatting Restrictions</h3>
+      <p>منع تغيير التنسيق مع السماح بالكتابة. مفيد لنماذج العقود الموحّدة.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">🔒</span>
+      <h3>Editing Restrictions</h3>
+      <p>خيارات: No Changes (القراءة فقط) | Comments فقط | Track Changes فقط | Filling in Forms.</p>
+    </div>
+  </div>
+
+  <h3>ب. Protect with Password — حماية بكلمة مرور</h3>
+  <div class="path">File <span class="arr">→</span> Info <span class="arr">→</span> Protect Document <span class="arr">→</span> Encrypt with Password</div>
+
+  <div class="warn">
+    <span class="w-tag">تحذير مهم</span>
+    لو نسيتِ كلمة المرور — لا توجد طريقة رسمية لاسترجاعها في Word. دوّنيها في مكان آمن دائماً.
+  </div>
+
+  <h3>ج. Mark as Final — تعليم بالنهائي</h3>
+  <div class="path">File <span class="arr">→</span> Info <span class="arr">→</span> Protect Document <span class="arr">→</span> Mark as Final</div>
+  <p>يحوّل المستند لوضع القراءة فقط مع رسالة تنبيه. لكنه ليس حماية حقيقية — أي شخص يستطيع إلغاءه بضغطة. يُستخدم للإشارة فقط.</p>
+
+  <!-- Example -->
+  <div class="example">
+    <div class="ex-head">📋 مثال ٤ — تأمين نموذج عقد بحيث لا يُعدَّل إلا في الخانات المحددة</div>
+    <div class="ex-body">
+      <h4>السيناريو: أعددتِ نموذج عقد إيجار — تريدين إرساله للموكل ليملأ بياناته فقط دون تعديل البنود</h4>
+      <ol>
+        <li>Review → Restrict Editing</li>
+        <li>فعّلي: <strong>☑ Allow only this type of editing: Filling in forms</strong></li>
+        <li>في مكان البيانات (الاسم، التاريخ، المبلغ): أدرجي حقول نماذج (Developer → Text Content Control)</li>
+        <li>اضغطي <strong>Yes, Start Enforcing Protection</strong> وأدخلي كلمة مرور</li>
+        <li>الآن: الموكل يستطيع فقط ملء الخانات — لا يستطيع تغيير بنود العقد</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 07. AUTOCORRECT & AUTOCOMPLETE ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">07</div>
+    <div>
+      <h2>التصحيح التلقائي والاختصارات الذكية</h2>
+      <div class="sec-why">توفير الوقت في الكتابة المتكررة — ٨ دقايق</div>
+    </div>
+  </div>
+
+  <h3>أ. AutoCorrect — التصحيح التلقائي</h3>
+  <div class="path">File <span class="arr">→</span> Options <span class="arr">→</span> Proofing <span class="arr">→</span> AutoCorrect Options</div>
+
+  <div class="def-box-teal">
+    <span class="def-term">AutoCorrect</span>
+    ميزة تُصحّح تلقائياً الأخطاء الشائعة فور كتابتها. يمكن إضافة اختصارات مخصصة مثل: كتابة "ق.م" يتحول تلقائياً إلى "القانون المدني المصري".
+  </div>
+
+  <h3>استخدامات AutoCorrect في الحقوق</h3>
+  <table class="sc-table">
+    <thead><tr><th>الاختصار المكتوب</th><th>النص الكامل التلقائي</th><th>الفائدة</th></tr></thead>
+    <tbody>
+      <tr><td><span class="key" style="font-size:12px">ق.م</span></td><td>القانون المدني المصري</td><td>يُكتب في كل بحث عشرات المرات</td></tr>
+      <tr><td><span class="key" style="font-size:12px">ق.ع</span></td><td>قانون العقوبات المصري</td><td>توفير في الكتابة المتكررة</td></tr>
+      <tr><td><span class="key" style="font-size:12px">م.ن</span></td><td>محكمة النقض المصرية</td><td>المرجع الأكثر تكراراً في البحوث</td></tr>
+      <tr><td><span class="key" style="font-size:12px">م.ا</span></td><td>المحكمة الإدارية العليا</td><td>بحوث القانون الإداري</td></tr>
+      <tr><td><span class="key" style="font-size:12px">ت.ج</span></td><td>التقنين التجاري المصري</td><td>بحوث القانون التجاري</td></tr>
+    </tbody>
+  </table>
+
+  <h3>ب. Building Blocks — كتل النصوص الجاهزة</h3>
+  <div class="path">Insert <span class="arr">→</span> Quick Parts <span class="arr">→</span> AutoText</div>
+
+  <div class="def-box-purple">
+    <span class="def-term">Building Blocks / AutoText</span>
+    حفظ أي نص أو جزء من مستند واستدعاؤه في أي وقت بكلمة مفتاحية. مثالي لحفظ الديباجة القانونية، بنود العقود المتكررة، أو صيغ المذكرات الثابتة.
+  </div>
+
+  <p>كيفية إنشاء AutoText: حدّدي النص ← <span class="path" style="margin:0 4px">Insert <span class="arr">→</span> Quick Parts <span class="arr">→</span> Save Selection to Quick Part Gallery</span></p>
+  <p>كيفية استدعائه: اكتبي الاسم المختصر ثم اضغطي <span class="key">F3</span></p>
+
+  <!-- Drill 3 -->
+  <div class="drill">
+    <span class="drill-tag">تدريب ٣ — إعداد AutoCorrect واختصارات قانونية</span>
+    <h4>أعدّي بيئة Word مخصصة للكتابة القانونية:</h4>
+    <ol>
+      <li>اذهبي إلى: File → Options → Proofing → AutoCorrect Options</li>
+      <li>أضيفي اختصاراً: في "Replace" اكتبي "قم" وفي "With" اكتبي "القانون المدني المصري"</li>
+      <li>اضغطي Add ثم OK — جرّبيه في مستند جديد</li>
+      <li>اكتبي ديباجة عقد كاملة (٣-٤ أسطر): "بسم الله الرحمن الرحيم، عقد بيع مبرم بين..."</li>
+      <li>حدّدي النص: Insert → Quick Parts → Save Selection to Quick Part Gallery — اسميه "ديباجة عقد"</li>
+      <li>في مستند جديد: اكتبي "ديباجة عقد" واضغطي <span class="key">F3</span> — ستظهر الديباجة كاملة</li>
+    </ol>
+    <div class="drill-time">⏱ الوقت المتوقع: 8 دقايق</div>
+  </div>
+</section>
+
+<!-- ══ 08. COMPARE DOCUMENTS ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">08</div>
+    <div>
+      <h2>مقارنة المستندات (Compare Documents)</h2>
+      <div class="sec-why">أداة احترافية للمراجعة — ٥ دقايق</div>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="def-term">Compare Documents</span>
+    أداة تقارن نسختين من نفس المستند وتعرض الفروق بينهما تلقائياً كـ Track Changes. مفيد عندما يُعدَّل ملف خارج Track Changes.
+  </div>
+
+  <div class="path">Review <span class="arr">→</span> Compare <span class="arr">→</span> Compare</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="c-icon">📄</span>
+      <h3>Original Document</h3>
+      <p>النسخة الأصلية (المرسلة للمشرف مثلاً).</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">📝</span>
+      <h3>Revised Document</h3>
+      <p>النسخة المعدّلة (التي أرجعها المشرف بعد التعديل).</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <span class="t-tag">متى تستخدمينه في الحقوق</span>
+    أرسلتِ عقداً للمحامي الآخر — رجع بنسخة "معدّلة" لكن بدون Track Changes. استخدمي Compare لمعرفة كل ما تغيّر في العقد بدقة — حرفاً حرفاً.
+  </div>
+</section>
+
+<!-- ══ 09. SHORTCUTS ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">09</div>
+    <div>
+      <h2>الاختصارات الكاملة للمحاضرة</h2>
+      <div class="sec-why">جدول مرجعي شامل</div>
+    </div>
+  </div>
+
+  <table class="sc-table">
+    <thead><tr><th>الاختصار</th><th>الوظيفة</th><th>الاستخدام في الحقوق</th></tr></thead>
+    <tbody>
+      <tr><td><span class="key">Ctrl + F</span></td><td>فتح شريط البحث (Find)</td><td><span class="sc-law">البحث عن مادة قانونية في بحث طويل</span></td></tr>
+      <tr><td><span class="key">Ctrl + H</span></td><td>البحث والاستبدال (Replace)</td><td><span class="sc-law">تغيير اسم موكّل في كل العقد</span></td></tr>
+      <tr><td><span class="key">Ctrl + Shift + E</span></td><td>تفعيل/إيقاف Track Changes</td><td><span class="sc-law">قبل إرسال البحث للمشرف</span></td></tr>
+      <tr><td><span class="key">Ctrl + Alt + M</span></td><td>إضافة تعليق (New Comment)</td><td><span class="sc-law">التعليق على جزء من العقد يحتاج مراجعة</span></td></tr>
+      <tr><td><span class="key">F7</span></td><td>التدقيق الإملائي والنحوي</td><td><span class="sc-law">قبل تسليم أي بحث أو وثيقة</span></td></tr>
+      <tr><td><span class="key">Shift + F7</span></td><td>قاموس المترادفات (Thesaurus)</td><td><span class="sc-law">إيجاد بديل لمصطلح متكرر</span></td></tr>
+      <tr><td><span class="key">F3</span></td><td>استدعاء AutoText/Building Block</td><td><span class="sc-law">إدراج ديباجة عقد محفوظة</span></td></tr>
+      <tr><td><span class="key">Ctrl + G</span></td><td>الانتقال لصفحة محددة (Go To)</td><td><span class="sc-law">الانتقال لصفحة عقد طويل بالرقم</span></td></tr>
+      <tr><td><span class="key">Ctrl + Home</span></td><td>بداية المستند</td><td><span class="sc-law">العودة لأول صفحة بعد المراجعة</span></td></tr>
+      <tr><td><span class="key">Ctrl + End</span></td><td>نهاية المستند</td><td><span class="sc-law">الانتقال لقائمة المراجع في النهاية</span></td></tr>
+      <tr><td><span class="key">Alt + Ctrl + S</span></td><td>تقسيم الشاشة (Split View)</td><td><span class="sc-law">عرض صفحتين من العقد في نفس الوقت</span></td></tr>
+      <tr><td><span class="key">Ctrl + Shift + C</span></td><td>نسخ التنسيق (Copy Format)</td><td><span class="sc-law">نسخ تنسيق عنوان وتطبيقه على عنوان آخر</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ 10. GLOSSARY ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">10</div>
+    <div>
+      <h2>قاموس مصطلحات المحاضرة</h2>
+      <div class="sec-why">مرجع سريع للمراجعة</div>
+    </div>
+  </div>
+  <dl class="glossary">
+    <div><dt>Find & Replace</dt><dd>البحث والاستبدال — أداة لإيجاد نص في المستند واستبداله تلقائياً في كل الأماكن دفعة واحدة.</dd></div>
+    <div><dt>Wildcards</dt><dd>رموز بحث خاصة مثل * و ? تُستخدم في Find المتقدم للبحث عن أنماط نصية غير محددة تماماً.</dd></div>
+    <div><dt>Track Changes</dt><dd>تتبع التغييرات — يُسجّل كل تعديل في المستند بلون مميز مع اسم المعدِّل والتاريخ.</dd></div>
+    <div><dt>Accept / Reject</dt><dd>قبول أو رفض التغييرات المُتتبَّعة. Accept يثبّت التعديل، Reject يُعيد النص الأصلي.</dd></div>
+    <div><dt>Show Markup</dt><dd>خيارات عرض التغييرات والتعليقات: All Markup (كل شيء) / Simple Markup (علامات فقط) / No Markup (الشكل النهائي).</dd></div>
+    <div><dt>Comment</dt><dd>تعليق جانبي مرتبط بنص محدد — لا يغيّر المحتوى ويمكن الرد عليه وحذفه.</dd></div>
+    <div><dt>Spelling & Grammar</dt><dd>التدقيق الإملائي والنحوي — يفحص المستند ويقترح تصحيحات. الاختصار: F7.</dd></div>
+    <div><dt>Add to Dictionary</dt><dd>إضافة كلمة للقاموس الشخصي حتى لا تُعلَّم كخطأ مستقبلاً.</dd></div>
+    <div><dt>Thesaurus</dt><dd>قاموس المترادفات — يقترح كلمات بديلة لأي كلمة محددة. الاختصار: Shift + F7.</dd></div>
+    <div><dt>Restrict Editing</dt><dd>تقييد التعديل — يمنع تغيير المستند أو يحصره في نوع محدد (تعليقات فقط / نماذج فقط).</dd></div>
+    <div><dt>AutoCorrect</dt><dd>التصحيح التلقائي — يصحح الأخطاء الشائعة فور كتابتها ويتيح إنشاء اختصارات نصية مخصصة.</dd></div>
+    <div><dt>Building Blocks / AutoText</dt><dd>كتل نصية جاهزة محفوظة يمكن استدعاؤها فوراً بكلمة مفتاحية + F3.</dd></div>
+    <div><dt>Compare Documents</dt><dd>مقارنة نسختين من مستند وعرض الفروق كـ Track Changes — حتى لو لم يُفعَّل Track Changes أثناء التعديل.</dd></div>
+    <div><dt>Encrypt with Password</dt><dd>تشفير المستند بكلمة مرور — لا يمكن فتحه بدونها.</dd></div>
+    <div><dt>Mark as Final</dt><dd>تعليم المستند كنسخة نهائية للقراءة فقط — إشارة غير ملزمة يمكن إلغاؤها.</dd></div>
+  </dl>
+</section>
+
+<!-- ══ 11. FINAL COMPREHENSIVE DRILL ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">11</div>
+    <div>
+      <h2>التدريب الختامي الشامل</h2>
+      <div class="sec-why">تجميع كل المحاضرة في سيناريو قانوني واقعي — ١٢ دقيقة</div>
+    </div>
+  </div>
+
+  <div class="drill">
+    <span class="drill-tag">تدريب ختامي — مراجعة عقد إيجار كاملة</span>
+    <h4>السيناريو: وصلك عقد إيجار من الطرف الآخر بتعديلات غير معلّمة — راجعيه احترافياً</h4>
+    <ol>
+      <li><strong>Compare:</strong> Review → Compare → اختاري النسخة الأصلية والنسخة المعدّلة — شاهدي الفروق تلقائياً</li>
+      <li><strong>Find & Replace:</strong> ابحثي عن "المستأجر" وتأكدي أن الاسم صحيح في كل المستند — <span class="key">Ctrl + H</span></li>
+      <li><strong>التدقيق:</strong> شغّلي <span class="key">F7</span> وصحّحي كل الأخطاء الإملائية — أضيفي المصطلحات القانونية للقاموس</li>
+      <li><strong>Track Changes:</strong> فعّلي <span class="key">Ctrl + Shift + E</span> وعدّلي بند الإيجار — اكتبي مبلغاً جديداً</li>
+      <li><strong>Comment:</strong> أضيفي تعليقاً على بند الفسخ: "يحتاج مراجعة محامٍ" — <span class="key">Ctrl + Alt + M</span></li>
+      <li><strong>AutoText:</strong> احفظي ديباجة العقد كـ Building Block باسم "ديباجة إيجار"</li>
+      <li><strong>الحماية:</strong> Review → Restrict Editing → Comments Only → Enforce Protection بكلمة مرور</li>
+      <li><strong>الحفظ:</strong> احفظي باسم "عقد_الإيجار_مراجعة_اسمك" — <span class="key">Ctrl + Shift + S</span> (Save As)</li>
+    </ol>
+    <div class="drill-time">⏱ الوقت المتوقع: 12 دقيقة</div>
+  </div>
+</section>
+
+<!-- ══ 12. HOMEWORK ══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-num">12</div>
+    <div>
+      <h2>الواجب البيتي والمراجعة الذاتية</h2>
+      <div class="sec-why">سلّميه في المحاضرة القادمة</div>
+    </div>
+  </div>
+
+  <h3 style="margin:0 0 14px">الواجب: مراجعة بحث المحاضرات السابقة احترافياً</h3>
+  <ul class="checklist">
+    <li><div class="check-box"></div>
+      <div><strong>Find & Replace:</strong> ابحثي عن اسم القانون الرئيسي في بحثك (مثل "القانون المدني") وتأكدي من كتابته بشكل موحّد في كل البحث — صحّحي أي تباين في الكتابة.</div>
+    </li>
+    <li><div class="check-box"></div>
+      <div><strong>التدقيق الإملائي:</strong> شغّلي F7 على كل البحث — صحّحي الأخطاء وأضيفي المصطلحات القانونية للقاموس. سجّلي كم خطأً وجدتِ.</div>
+    </li>
+    <li><div class="check-box"></div>
+      <div><strong>Track Changes:</strong> فعّلي Track Changes وأجري ٣ تعديلات على البحث (إضافة، حذف، تعديل) — ثم احفظي الملف. لا تقبلي التعديلات بعد.</div>
+    </li>
+    <li><div class="check-box"></div>
+      <div><strong>Comments:</strong> أضيفي ٣ تعليقات على أجزاء من البحث (مثل: "يحتاج مرجع"، "راجع الصياغة"، "إضافة مثال").</div>
+    </li>
+    <li><div class="check-box"></div>
+      <div><strong>AutoCorrect:</strong> أعدّي ٣ اختصارات مخصصة لأكثر مصطلحات بحثك تكراراً.</div>
+    </li>
+    <li><div class="check-box"></div>
+      <div><strong>الحماية:</strong> احفظي نسخة من البحث بكلمة مرور (Encrypt with Password) — وسلّميها مع ذكر كلمة المرور.</div>
+    </li>
+  </ul>
+
+  <h3 style="margin:28px 0 14px">أسئلة المراجعة الذاتية</h3>
+  <div class="q-grid">
+    <div class="q-card">
+      <h3>🤔 نظرية</h3>
+      <ol>
+        <li>ما الفرق بين Find و Find & Replace؟</li>
+        <li>ما الفرق بين Track Changes و Comments؟</li>
+        <li>ما معنى Accept All Changes؟ ومتى تستخدمينه؟</li>
+        <li>ما الفرق بين Restrict Editing و Encrypt with Password؟</li>
+        <li>ما هو AutoText ومتى يفيدك في الكتابة القانونية؟</li>
+        <li>ما الفرق بين Mark as Final و Encrypt with Password؟</li>
+      </ol>
+    </div>
+    <div class="q-card">
+      <h3>⌨️ عملية</h3>
+      <ol>
+        <li>كيف أستبدل كلمة في كل المستند دفعة واحدة؟</li>
+        <li>ما اختصار تفعيل Track Changes؟</li>
+        <li>كيف أضيف تعليقاً على جزء من النص؟</li>
+        <li>كيف أشغّل التدقيق الإملائي بالكامل؟</li>
+        <li>كيف أحمي مستنداً بكلمة مرور؟</li>
+        <li>كيف أقارن نسختين من نفس المستند؟</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:28px">
+    <span class="c-tag">ما الذي سنتعلمه في المحاضرة السادسة</span>
+    المراسلات القانونية الاحترافية — Mail Merge لإنشاء خطابات ومذكرات جماعية، تنسيق الخطابات الرسمية، ونماذج العقود والمذكرات القانونية الجاهزة.
+  </div>
+</section>
+
+<footer>
+  SUNSHINE T ACADEMY — WORD SKILLS — LAW FACULTY — LECTURE 05 / 10 — REVIEW SHEET
+</footer>
+
+</div>
+</body>
+</html>
